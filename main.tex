@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
+\usepackage{hyperref}
+\usepackage{xcolor}
 
 \title{How I organize research code}
 \author{Robby Parker}
@@ -36,6 +38,15 @@ It then gets promoted through one of several pathways:
     or algorithm)
 \end{itemize}
 
+\noindent Criteria with which to compare repositories:
+\begin{itemize}
+  \item Private or public?
+  \item Do I commonly (ever) make new branches?
+  \item Testing requirement for code in the repo
+  \item Documentation requirement for code in the repo
+  \item Structured as a package? (I.e. can I import from it?)
+\end{itemize}
+
 \section{Scratchpad}
 \begin{itemize}
   \item Private repo
@@ -47,8 +58,121 @@ A repository for running small examples, testing new features, and
 debugging. I often use this to write a small script to test a new
 Pyomo feature or test something while reviewing a PR.
 
-\section{Workspace}
-My main repository for research development.
+\begin{center}
+  \newpage
+  Sample scratchpad directory structure\\
+  \includegraphics[width=8cm]{scratchpad_tree.png}
+\end{center}
 
+Several of the files in my scratchpad repository are just minimal
+working examples of bugs/issues/features -- this is a large portion
+of what I use this repo for.
+
+\section{Workspace}
+\begin{itemize}
+  \item Private repo
+  \item Doesn't use branches
+  \item Testing requirement: {\color{purple}\bf medium}
+  \item Documentation requirement: {\color{blue}\bf low}
+  \item Structured as a Python package
+\end{itemize}
+My main repository for research development. I have different
+directories for each model I work on and different repositories for
+each tool/algorithm I'm working on.
+The repo is structured as a Python package as I am constantly
+importing code from different locations within the repo,
+including in tests.
+I find tests to be a pretty critical part of this repository. While
+I don't necessarily write unit tests to cover every line of code,
+when I come back to a project for the first time in a while, it is
+pretty useful to be able to run a single command to make sure
+my code still works.
+\begin{center}
+  Sample (first two levels of) workspace directory structure\\
+  \includegraphics[width=6cm]{workspace_tree.png}
+  \\
+  Directory structure of the \texttt{incidence\_demo/} subdirectory
+  \includegraphics[width=7cm]{incidence_demo_tree.png}
+\end{center}
+
+You can see I make a new directory every time I make a presentation or
+paper about or including the incidence graph work I've done.
+
+\section{Single-project collaborative repositories}
+For example,
+\href{https://github.com/Robbybp/gas_distribution}{\texttt{gas\_distribution}}
+or
+\href{https://github.com/robbybp/nmpc_examples}{\texttt{nmpc\_examples}}.
+\begin{itemize}
+  \item Only private if sensitive data is involved
+  \item Use branches
+  \item Testing requirement: {\color{purple}\bf medium}
+  \item Documentation requirement: {\color{blue}\bf low}
+  \item Structured as Python packages
+\end{itemize}
+When actively collaborating with others on research code, we create
+a dedicated repository for the project, rather than just sharing a
+``workspace'' directory, which contains way more code than somebody else
+wants to look through.
+These repositories can start out with code copied from workspace
+(if somebody starts collaborating after I have started working on something)
+or as empty repositories (if I start a new project knowing it will be
+collaborative).
+
+\begin{center}
+  First two levels of the directory structure of \texttt{gas\_distribution}
+  \includegraphics[width=7cm]{gas_distribution_tree.png}
+\end{center}
+
+This is basically just one of the problem-specific subdirectories of
+workspace, now with branching and PRs, etc.
+
+\section{Upstream open-source repositories}
+For example, Pyomo or IDAES.
+\begin{itemize}
+  \item Public
+  \item Use branches
+  \item Testing requirement: {\color{red}\bf high}
+  \item Documentation requirement: {\color{red}\bf high}
+  \item Are Python packages
+\end{itemize}
+
+These are pretty self-explanatory. When I have code that I think
+is useful, clear, maintainable, and would make a valuable
+contribution to an upstream project, I copy the code into a branch
+of one of these repositories, write some tests, and open a PR.
+Or if I'm working on a feature or fix for an upstream project,
+I'll start out my development in a branch of one of these
+repositories.
+
+\section{Publications}
+\begin{itemize}
+  \item Public
+  \item Use branches
+  \item Testing requirement: {\color{red}\bf medium}
+  \item Documentation requirement: {\color{red}\bf medium}
+  \item Code for each paper is structured as a package
+  \item No unreleased dependencies!
+\end{itemize}
+
+When a tool, algorithm, or case study gets to the point where it is
+ready for a paper, I copy the code into a separate repository for
+publications in a directory named for something to do with the paper.
+The purpose of this is to help a reader or reviewer reproduce the
+results (and if they are ambitious, see what's actually going on
+in the code).
+It needs to be documented well enough that somebody knows what to run
+to produce results (e.g. plots), and preferably has some tests a
+user can run to make sure they have the right dependencies
+(and versions thereof) installed.
+
+I try to be pretty strict about not requiring any unreleased software
+to run the code in this repository (e.g. saying ``go checkout my branch
+of Pyomo'').
+
+Since this code is not something I want to maintain after a paper is
+published, I freeze the environment I used to generate the results
+(so a user knows the exact version of every dependency)
+and worry about correctness for that environment only.
 
 \end{document}
