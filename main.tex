@@ -21,9 +21,19 @@ This document presents and describes the different repositories that I
 use to manage code for different projects, at different levels of
 maturity.
 
+This is just a system that I have developed to categorize the code that
+I write. I don't necessarily intend for anybody to copy the repositories
+I use, but if any of this document helps anybody think about how to
+structure their own research software, it has served its purpose.
+
+Admittedly, some of this is specific to Python, the programming language
+I have used for my PhD (e.g. ``update imports'', ``structured as a
+Python package''). However, I think the general concepts should apply to
+research software in any language.
+
 \section{Different repositories}
 
-\hspace{-2cm}\includegraphics[width=16cm]{repo_diagram}
+\hspace{-1.5cm}\includegraphics[width=15cm]{repo_diagram}
 
 Most code starts out in workspace, either as a utility method/class,
 implementation an algorithm, or model/case study.
@@ -146,6 +156,7 @@ I'll start out my development in a branch of one of these
 repositories.
 
 \section{Publications}
+For example, \href{https://github.com/idaes/publications}{IDAES/publications}.
 \begin{itemize}
   \item Public
   \item Use branches
@@ -179,5 +190,99 @@ and worry about correctness for that environment only.
   Sample directory structure for a publications repository.\\
   \includegraphics[width=10cm]{publications_tree}
 \end{center}
+
+\section{Examples}
+For example, \href{https://github.com/IDAES/examples-pse}{IDAES/examples-pse}
+or \href{https://github.com/Robbybp/incidence_examples}{\texttt{incidence\_examples}}.
+\begin{itemize}
+  \item Public
+  \item Uses branches
+  \item Testing requirement: {\color{red}\bf high}
+  \item Documentation requirement: {\color{red}\bf high}
+\end{itemize}
+
+When some code that does something useful is concise and explainable
+enough to be read, understood, and learned from, it might make a good
+example. To me, examples should have the strictest requirements requirements
+of any of the pieces of code I've covered, as they need to be not only
+well-tested and well-documented, but the code itself needs to be
+understandable enough to make for good learning/explanation material.
+
+I don't have a lot of experience writing examples --
+\href{https://github.com/Robbybp/incidence_examples}{\texttt{incidence\_examples}}
+is my only real attempt. Some projects include examples in the main project
+repository, while some distribute them as a separate repo.
+I don't have a strong opinion about this, as long as they can be tested
+for every PR in the main repository.
+Examples also seem to come in either scripts or (Jupyter) notebooks.
+I prefer scripts, but admit that notebooks have benefits for demonstrations.
+
+\begin{center}
+  Sample directory structure for an examples repository.\\
+  \includegraphics[width=6cm]{incidence_examples_tree_small}
+\end{center}
+
+\section{General tips}
+Some unsolicited advice.
+
+\subsection{Don't maintain the same code multiple places}
+Once you've ``promoted'' code by copying to another repository
+(e.g. repo for collaborative work, or upstream open-source repo),
+don't maintain it in the original location.
+Ideally, update imports to use the code in the new location,
+run the tests to make sure it works, and delete the old code.
+
+\subsection{Update imports (and function names) with
+\texttt{find} and \texttt{sed}}
+Using \texttt{find} and \texttt{sed} to do simple replacement
+for all files in a directory tree should be be second-nature.
+
+Common commands:
+\begin{itemize}
+  \item \texttt{grep -r old\_name}\\
+    To see where the old name is being used.
+  \item \texttt{\small
+      find . -name '*$\backslash$.py' -exec sed s/old\_name/new\_name/g \{\} $\backslash$; | grep new\_name
+    }\\
+    To replace the old name with the new name, then see where the new name appears.
+    Make sure this is exactly where you expect.
+  \item \texttt{find . -name '*$\backslash$.py' -exec sed -i s/old\_name/new\_name/g \{\} $\backslash$;
+    }\\
+    To actually do the replacement in-place (modify the files).
+\end{itemize}
+
+\subsection{Write tests for everything}
+Having good tests for research code is amazingly useful.
+When you make a change, or come back to some code after a while
+and forget some of the details, being able to run tests and be reasonably
+convinced it still works is a life-saver.
+
+Good tests run quickly ($< 10$s, ideally) and exercise all the code you
+are interested in. For example, when writing a model predictive control case
+study, I usually write a test that constructs a small (short time horizon)
+instance of my model and runs one iteration of MPC (perhaps with a simplified
+setpoint/disturbance). I then test that the control variables computed are
+what I expect (within tolerance).
+
+I don't necessarily recommend unit tests for every single piece of research
+code you ever write, but fast tests that tell you whether your software
+works are amazing to have.
+
+\subsection{Use your editor to its full capacity}
+And the command line, for that matter.\\
+
+E.g. find and replace, copy/cut/paste, delete/replace a word or line,
+jump to the beginning or end of a word/line/paragraph, scroll through a file,
+edit multiple lines at once, repeat at command or keystroke, call another
+program, etc. without your hands leaving the keyboard.
+
+\subsection{Keep a ``living document'' for each project}
+I keep a \texttt{log.tex} file for every project I work on to record
+my thoughts and plans, sectioned by date in reverse-chronological order.
+Essentially just lab notebooks.
+90\% of the value proposition of these files is just to answer the question
+``What was I working on last time I touched this project?''
+They're also useful places to put intermediate results that I may want to
+reference at some point.
 
 \end{document}
