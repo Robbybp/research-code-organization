@@ -17,11 +17,11 @@
 Computational research involves writing many different pieces of code.
 Often, when writing a new piece of code, I find myself wondering where
 to put it. And then wondering when it is ``good enough'' to be promoted.
-This document presents and describes the different repositories that I
+This document describes the different repositories that I
 use to manage code for different projects, at different levels of
 maturity.
 
-This is just a system that I have developed to categorize the code that
+This is just a system that I have developed to manage the code that
 I write. I don't necessarily intend for anybody to copy the repositories
 I use, but if any of this document helps anybody think about how to
 structure their own research software, it has served its purpose.
@@ -126,8 +126,8 @@ a dedicated repository for the project, rather than just sharing a
 wants to look through.
 These repositories can start out with code copied from workspace
 (if somebody starts collaborating after I have started working on something)
-or as empty repositories (if I start a new project knowing it will be
-collaborative).
+or as empty repositories (if I start a new project knowing it will
+involve collaborative development).
 
 \begin{center}
   First two levels of the directory structure of \texttt{gas\_distribution}
@@ -138,7 +138,8 @@ This is basically just one of the problem-specific subdirectories of
 workspace, now with branching and PRs, etc.
 
 \section{Upstream open-source repositories}
-For example, Pyomo or IDAES.
+For example, \href{https://github.com/pyomo/pyomo}{Pyomo} or
+\href{https://github.com/idaes/idaes-pse}{IDAES}.
 \begin{itemize}
   \item Public
   \item Use branches
@@ -235,7 +236,7 @@ run the tests to make sure it works, and delete the old code.
 \subsection{Update imports (and function names) with
 \texttt{find} and \texttt{sed}}
 Using \texttt{find} and \texttt{sed} to do simple replacement
-for all files in a directory tree should be be second-nature.
+for all files in a directory tree should be be second nature.
 
 Common commands:
 \begin{itemize}
