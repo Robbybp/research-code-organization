@@ -51,10 +51,15 @@ It then gets promoted through one of several pathways:
 \noindent Criteria with which to compare repositories:
 \begin{itemize}
   \item Private or public?
-  \item Do I commonly (ever) make new branches?
+  \item Do I commonly (ever) make new branches?\\
+    I usually only use branches for collaborative repositories.
+    I think using branches for my own personal research repositories
+    would end with me generating way more branches than I can manage.
   \item Testing requirement for code in the repo
   \item Documentation requirement for code in the repo
-  \item Structured as a package? (I.e. can I import from it?)
+  \item Structured as a package? (I.e. can I import from it?)\\
+    I structure a lot of my code as packages (with a small \texttt{setup.py} file)
+    so I can import it in other repositories and to make it easier to test.
 \end{itemize}
 
 \section{Scratchpad}
@@ -142,6 +147,8 @@ involve collaborative development).
 
 This is basically just one of the problem-specific subdirectories of
 workspace, now with branching and PRs, etc.
+The repository with directory tree pictured above, \texttt{gas\_distribution},
+started out as the ``pipelines'' subdirectory in ``workspace.''
 
 \section{Upstream open-source repositories}
 For example, \href{https://github.com/pyomo/pyomo}{Pyomo} or
@@ -157,7 +164,7 @@ For example, \href{https://github.com/pyomo/pyomo}{Pyomo} or
 These are pretty self-explanatory. When I have code that I think
 is useful, clear, maintainable, and would make a valuable
 contribution to an upstream project, I copy the code into a branch
-of one of these repositories, write some tests, and open a PR.
+of one of these repositories, write some unit tests, and open a PR.
 Or if I'm working on a feature or fix for an upstream project,
 I'll start out my development in a branch of one of these
 repositories.
